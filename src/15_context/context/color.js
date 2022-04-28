@@ -20,6 +20,5 @@ const ColorProvider = ({children}) => {
         <ColorContext.Provider value={value}>{children}</ColorContext.Provider>
     )
 }
-const {Consumer: ColorConsumer} = ColorContext;
-export {ColorProvider, ColorConsumer}
+export {ColorProvider}
 export default ColorContext;
