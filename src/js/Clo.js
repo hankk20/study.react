@@ -22,3 +22,14 @@ console.log(coun.inc())
 console.log(coun2.inc())
 console.log(coun.dec())
 console.log(coun.dec())
+
+function out(s){
+    if(s){
+        s()
+    }
+    return function inf(){
+        out(() => console.log("inf"))
+    }
+}
+const ss = out();
+ss()

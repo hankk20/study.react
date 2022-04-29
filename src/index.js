@@ -3,17 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from "./17_react_redux/App";
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from 'react-router-dom'
 import {configureStore} from "@reduxjs/toolkit";
 import counter from "./17_react_redux/modules/counter";
 import todos from "./17_react_redux/modules/todos";
 import {Provider} from "react-redux";
+import {createLogger} from "redux-logger/src";
+import thunk from 'redux-thunk'
+import sample from "./17_react_redux/modules/sample";
+
+const logger = createLogger();
 //1. reducer를 먼저 등록
 const store = configureStore({
     reducer: {
         counter,
-        todos
-    }
+        todos,
+        sample
+    },
+    middleware: [logger, thunk]
 });
 
 ReactDOM.render(
