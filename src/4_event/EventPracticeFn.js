@@ -18,14 +18,13 @@ const EventPracticeFn = () => {
                 type={"text"}
                 name={"message"}
                 placeholder={"아무거나"}
-                value={form.message}
                 onChange={onChange}
+
             />
             <input
                 type={"text"}
                 name={"username"}
                 placeholder={"아무거나"}
-                value={form.username}
                 onChange={onChange}
             />
             <button onClick={onClick}

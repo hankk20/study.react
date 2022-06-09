@@ -16,8 +16,8 @@ const Avg = () => {
     const onInsert = useCallback((e) => {
         const conList = list.concat(parseInt(number)); //함수 갱신 하지 않으면 초기값 그대로 가지고 있음
         setList(conList);
-        setNumber('')
-    }, [list, number]) //list, number 값이 변경될때에 함수 새로 생성
+       // setNumber('')
+    }, []) //list, number 값이 변경될때에 함수 새로 생성
 
     const onchange = useCallback((e) => {
         setNumber(e.target.value);

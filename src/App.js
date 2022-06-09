@@ -1,14 +1,12 @@
 import './App.css';
 import {Component} from "react";
-import Info from "./8_hook/reduce";
-import Avg from "./8_hook/memo";
+import Sample from "src/17_react_redux/component/Sample";
 
 class App extends Component{
     render() {
         return(
             <>
-                <Info/>
-                <Avg/>
+               <Sample/>
             </>
         )
     }

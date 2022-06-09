@@ -14,8 +14,21 @@ const actionUsers = createAction('sample/GET_USERS');
 const actionUsersSuccess = createAction('sample/GET_USERS_SUCCESS', success)
 const actionUsersFailure = createAction('sample/GET_USERS_FAILURE', failure)
 
+export const getPostFn = function(id) {
+    return async function (dispatch, getState){
+        dispatch(actionPost()); //요청 시작
+        try {
+            const response = await api.getPost(id);
+            dispatch(actionPostSuccess(response));
+        }catch (e){
+            dispatch(actionPostFailure(e));
+            throw e;
+        }
+    }
+}
 
-export const getPost = id => async dispatch => {
+export const getPost = id => async (dispatch, getState) => {
+    debugger;
     dispatch(actionPost()); //요청 시작
     try {
         const response = await api.getPost(id);
