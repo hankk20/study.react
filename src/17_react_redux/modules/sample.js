@@ -6,9 +6,9 @@ const success = response =>
 const failure = error => ({payload: error});
 
 
-const actionPost = createAction('sample/GET_POST');
-const actionPostSuccess = createAction('sample/GET_POST_SUCCESS', success)
-const actionPostFailure = createAction('sample/GET_POST_FAILURE', failure)
+export const actionPost = createAction('sample/GET_POST');
+export const actionPostSuccess = createAction('sample/GET_POST_SUCCESS', success)
+export const actionPostFailure = createAction('sample/GET_POST_FAILURE', failure)
 
 const actionUsers = createAction('sample/GET_USERS');
 const actionUsersSuccess = createAction('sample/GET_USERS_SUCCESS', success)
@@ -28,7 +28,7 @@ export const getPostFn = function(id) {
 }
 
 export const getPost = id => async (dispatch, getState) => {
-    debugger;
+
     dispatch(actionPost()); //요청 시작
     try {
         const response = await api.getPost(id);
@@ -62,8 +62,14 @@ const init = {
 const sample = createReducer(init, {
     [actionPost]: ({loading}) => {loading.GET_POST = true},
     [actionPostSuccess]: (state, {payload}) => {
+        debugger;
         state.loading.GET_POST = false;
         state.post = payload;
+        
+        const inenrCall = async (state) => {
+            state.post = await api.getPost(2).then(response => response.data);
+        }
+        inenrCall(state)
     },
     [actionPostFailure]: ({loading}) => {loading.GET_POST = false},
     [actionUsers]: ({loading}) => {loading.GET_USERS = true},

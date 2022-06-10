@@ -10,6 +10,7 @@ import {Provider} from "react-redux";
 import {createLogger} from "redux-logger/src";
 import thunk from 'redux-thunk'
 import sample from "./17_react_redux/modules/sample";
+import loggerMiddleware from "./17_react_redux/lib/loggerMiddleware";
 
 const logger = createLogger();
 //1. reducer를 먼저 등록
@@ -19,7 +20,7 @@ const store = configureStore({
         todos,
         sample
     },
-    middleware: [logger, thunk]
+    middleware: [loggerMiddleware, thunk]
 });
 
 ReactDOM.render(

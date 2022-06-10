@@ -1,3 +1,4 @@
+//redux Store
 function createStore(reducer) {
     let state;
     const listeners = [];
@@ -8,7 +9,7 @@ function createStore(reducer) {
 
     const subscribe = (listener) => {
         listeners.push(listener);
-        return function unsubscribe() { // 클로저가 활용되는 것을 확인할 수 있습니다.
+        return function unsubscribe() {
             const index = listeners.indexOf(listener);
             listeners.splice(index, 1);
         };
@@ -19,6 +20,7 @@ function createStore(reducer) {
         listeners.forEach((listener) => listener());
     };
 
+
     return {
         getState,
         subscribe,
@@ -26,14 +28,49 @@ function createStore(reducer) {
     };
 }
 
-function createThunkMiddleware() {
-    return ({dispatch, getState}) => next => action => {
-        if (typeof action === 'function') {
-            return action(dispatch, getState);
-        }
+const thunk = store => next => action =>
+    typeof action === 'function' ?
+        action(store.dispatch, store.getState) :
         next(action);
-    }
+
+function applyMiddleware(store, middlewares) {
+    middlewares = middlewares.slice();
+    middlewares.reverse();
+
+    let dispatch = store.dispatch;
+    middlewares.forEach(middleware => {
+            dispatch = middleware(store)(dispatch) //logger
+            console.log(dispatch)
+        }
+    );
+
+    return Object.assign({}, store, { dispatch });
 }
 
-const store = createStore((s, a) => {});
-console.log(store);
+const logger2 = store => next => action => {
+    console.log(`logger start2 ${action}`)
+    const state = store.getState();
+    console.log(state);
+    next(action)
+    console.log(`logger end2 ${action}`)
+}
+
+const logger = store => next => action => {
+    console.log(`logger start ${action}`)
+    next(action)
+    console.log(`logger end ${action}`)
+}
+
+
+const store = createStore((state, action) => {
+    console.log(`reduce ${action}`)
+});
+
+const midleStore = applyMiddleware(store, [logger, logger2]);
+
+// const getId = (id) => (dispatch, getState) => {
+//     console.log("thunk log")
+// }
+
+
+midleStore.dispatch({type: "TEST"})
