@@ -66,11 +66,12 @@ const store = createStore((state, action) => {
     console.log(`reduce ${action}`)
 });
 
-const midleStore = applyMiddleware(store, [logger, logger2]);
+const midleStore = applyMiddleware(store, [logger, thunk,logger2]);
 
-// const getId = (id) => (dispatch, getState) => {
-//     console.log("thunk log")
-// }
+const getId = (id) => (dispatch, getState) => {
+    console.log("thunk log")
+}
 
 
-midleStore.dispatch({type: "TEST"})
+//midleStore.dispatch({type: "TEST"})
+midleStore.dispatch(getId(1))
